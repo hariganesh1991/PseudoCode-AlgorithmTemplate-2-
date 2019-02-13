@@ -26,46 +26,67 @@ Output of PCA(D)= centroid ($\mu_d$), Eigen Vectors ($\nu_1$, $\nu_2$, $\nu_3$) 
 \vspace{0.15cm}
 \textbf{For} i=1 to 50\\
 \hspace{0.75cm}
-q1(i) = $\mu_d + (i.dis \times \nu_1)$\\
+q1(i) = $\mu_d + (i*dis*\nu_1)$\\
 \hspace{0.75cm}
-q2(i) = $\mu_d + (i.dis \times -\nu_1)$\\
+q2(i) = $\mu_d + (i*dis*-\nu_1)$\\
 \hspace{0.75cm}
-q3(i)= $\mu_d + (i.dis \times \nu_2)$\\
+q3(i)= $\mu_d + (i*dis*\nu_2)$\\
 \hspace{0.75cm}
-q4(i)= $\mu_d + (i.dis \times -\nu_2)$\\
+q4(i)= $\mu_d + (i*dis*-\nu_2)$\\
 \hspace{0.75cm}
-q5(i)=$\mu_d + (i.dis \times \nu_3)$\\
+q5(i)=$\mu_d + (i*dis*\nu_3)$\\
 \textbf{End for}\\
 \vspace{0.25cm}
 \textit{//Points corresponding to $\nu_1$ and $-\nu_1$//}\\
 \vspace{0.25cm}
 [index1,distances1]=nearest neighbour search ($D$,q1)\\
 crossing point index1 = index(min(distances1))\\
-d1=$||\mu_d-q1(crossing point index1)||$\\
+d1=$||\mu_d-q1(crossing \hspace{0.1cm} point\hspace{0.1cm} index1)||$\\
 intersection point index1=index1(crossing point index1)\\
 P1 = $D$(intersection point index1)\\
 \vspace{0.25cm}
 [index2,distances2]=nearest neighbour search ($D$,q2)\\
 crossing point index2 = index(min(distances2))\\
-d2=$||\mu_d-q2(crossing point index2)||$\\
+d2=$||\mu_d-q2(crossing\hspace{0.1cm} point\hspace{0.1cm} index2)||$\\
 intersection point index2=index2(crossing point index2)\\
 P2 = $D$(intersection point index2)\\
 \vspace{0.25cm}
 //Repeat for $\nu_2$ , $-\nu_2$ and $\nu_3$ to yield P3 ,P4 and P5 on the reference point cloud and d3, d4 and d5 along the direction $\nu_2$ , $-\nu_2$ and $\nu_3$ respectively// \\
 \vspace{0.25cm}
-Reference Base $P = [P1, P2, P3, P5]$\\
+Reference Base $P = [P1, P3, P2, P4, P5]$\\
 \end{algorithm}
 \newpage
 \begin{algorithm}[H]
 \caption{Extraction of Congruent Bases from Measured Point set $M$}
 \textbf{Input}: Measured Point set $M$, Distances = [d1, d2, d3, d4, d5]\\
-\textbf{Output}:4 congruent bases $B_M = [M_b1,M_b2,M_b3,M_b4]$\\
+\textbf{Output}:4 congruent bases $B_M = [M_{b1},M_{b2},M_{b3},M_{b4}]$\\
 \vspace{0.25cm}
-Output of PCA of $M$ = centroid ($\mu_m$), Eigen Vectors ($\nu_m1$, $\nu_m2$, $\nu_m3$) , Eigen values ($\lambda_m1$, $\lambda_m2$, $\lambda_m3$)\\
+Output of PCA of $M$ = centroid ($\mu_m$), Eigen Vectors ($\nu_{m1}$, $\nu_{m2}$, $\nu_{m3}$) , Eigen values ($\lambda_{m1}$, $\lambda_{m2}$, $\lambda_{m3}$)\\
 \vspace{0.25cm}
-//Distance d1 and d2 along $nu_m1$//\\
+//Distance d1 and d2 along $\nu_{m1}$// \\
 \vspace{0.25cm}
-$q_m1 = \mu_m + d1 \times \nu_m1$\\
+$q_{m1}= \mu_m + d1*\nu_{m1}$ \\
+$[index1m,dist1m] = nearest\hspace{0.1cm} neighbour \hspace{0.1cm}search(M,q_{m1})$\\
+$P_{m1} = M(index1m)$\\
+\vspace{0.25cm}
+$q_{m2}= \mu_m + d2*\nu_{m1}$ \\
+$[index2m,dist2m] = nearest\hspace{0.1cm} neighbour\hspace{0.1cm} search(M,q_{m2})$\\
+$P_{m2} = M(index2m)$\\
+\vspace{0.25cm}
+//Repeat along $-\nu_{m1}$ using distances d1 and d2 to get $P_{m3}$ and $P_{m4}$ respectively// \\
+\vspace{0.25cm}
+//Repeat along $\nu_{m2}$ using distances d3 and d4 to get $P_{m5}$ and $P_{m6}$ respectively//\\
+\vspace{0.25cm}
+//Repeat along $-\nu_{m2}$ using distances d3 and d4 to get $P_{m7}$ and $P_{m8}$ respectively// \\
+\vspace{0.25cm}
+//Repeat along $\nu_{m3}$ using distance d5 to get $P_{m9}$ // \\
+\vspace{0.25cm}
+$M_{b1}=[P_{m1},P_{m5},P_{m4},P_{m8},P_{m9}]$\\
+$M_{b2}=[P_{m1},P_{m6},P_{m4},P_{m7},P_{m9}]$\\
+$M_{b3}=[P_{m2},P_{m5},P_{m3},P_{m8},P_{m9}]$\\
+$M_{b4}=[P_{m2},P_{m6},P_{m3},P_{m7},P_{m9}]$\\
+
+
 
 
 

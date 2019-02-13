@@ -1,0 +1,76 @@
+\title{AlgorithmTemplate}
+\documentclass[12pt]{article}
+\usepackage{fullpage}
+\usepackage{times}
+\usepackage{fancyhdr,graphicx,amsmath,amssymb}
+\usepackage[ruled,vlined]{algorithm2e}
+\include{pythonlisting}
+\usepackage{listings}
+\begin{document} 
+\begin{algorithm}[H]
+\caption{Extraction of base from reference point set \textit{D}}
+\textbf{Input :} Reference point set \textit{D =[X, Y, Z]} \\
+\textbf{Output :} Reference Base
+\textit{P=[$P_1$,$P_2$,$P_3$,$P_4$,$P_5$]}\\
+\vspace{0.25cm}
+
+Output of PCA(D)= centroid ($\mu_d$), Eigen Vectors ($\nu_1$, $\nu_2$, $\nu_3$) , Eigen values ($\lambda_1$, $\lambda_2$, $\lambda_3$)\\
+\vspace{0.25cm}
+\textit{Range X = $X_{max}$ - $X_{min}$}\\
+\textit{Range Y = $Y_{max}$ - $Y_{min}$}\\
+\textit{Range Z = $Z_{max}$ - $Z_{min}$}\\
+\textit{Range D = $max(Range X, Range Y, Range Z )$}\\
+\textit{dis = $Range D / 50$}\\
+\vspace{0.25cm}
+\textit{//Points on Eigen Vectors//}\\
+\vspace{0.15cm}
+\textbf{For} i=1 to 50\\
+\hspace{0.75cm}
+q1(i) = $\mu_d + (i.dis \times \nu_1)$\\
+\hspace{0.75cm}
+q2(i) = $\mu_d + (i.dis \times -\nu_1)$\\
+\hspace{0.75cm}
+q3(i)= $\mu_d + (i.dis \times \nu_2)$\\
+\hspace{0.75cm}
+q4(i)= $\mu_d + (i.dis \times -\nu_2)$\\
+\hspace{0.75cm}
+q5(i)=$\mu_d + (i.dis \times \nu_3)$\\
+\textbf{End for}\\
+\vspace{0.25cm}
+\textit{//Points corresponding to $\nu_1$ and $-\nu_1$//}\\
+\vspace{0.25cm}
+[index1,distances1]=nearest neighbour search ($D$,q1)\\
+crossing point index1 = index(min(distances1))\\
+d1=$||\mu_d-q1(crossing point index1)||$\\
+intersection point index1=index1(crossing point index1)\\
+P1 = $D$(intersection point index1)\\
+\vspace{0.25cm}
+[index2,distances2]=nearest neighbour search ($D$,q2)\\
+crossing point index2 = index(min(distances2))\\
+d2=$||\mu_d-q2(crossing point index2)||$\\
+intersection point index2=index2(crossing point index2)\\
+P2 = $D$(intersection point index2)\\
+\vspace{0.25cm}
+//Repeat for $\nu_2$ , $-\nu_2$ and $\nu_3$ to yield P3 ,P4 and P5 on the reference point cloud and d3, d4 and d5 along the direction $\nu_2$ , $-\nu_2$ and $\nu_3$ respectively// \\
+\vspace{0.25cm}
+Reference Base $P = [P1, P2, P3, P5]$\\
+\end{algorithm}
+\newpage
+\begin{algorithm}[H]
+\caption{Extraction of Congruent Bases from Measured Point set $M$}
+\textbf{Input}: Measured Point set $M$, Distances = [d1, d2, d3, d4, d5]\\
+\textbf{Output}:4 congruent bases $B_M = [M_b1,M_b2,M_b3,M_b4]$\\
+\vspace{0.25cm}
+Output of PCA of $M$ = centroid ($\mu_m$), Eigen Vectors ($\nu_m1$, $\nu_m2$, $\nu_m3$) , Eigen values ($\lambda_m1$, $\lambda_m2$, $\lambda_m3$)\\
+\vspace{0.25cm}
+//Distance d1 and d2 along $nu_m1$//\\
+\vspace{0.25cm}
+$q_m1 = \mu_m + d1 \times \nu_m1$\\
+
+
+
+
+
+\end{algorithm}
+
+\end{document}
